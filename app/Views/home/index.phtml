@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="css/customColors.css"  media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="css/ion.rangeSlider.css"  media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css"  media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="css/index.css"  media="screen,projection"/>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formulario</title>
+</head>
+
+<body>
+  <video src="img/video.mp4" id="vidFondo"></video>
+
+  <div class="contenedor">
+    <div class="card rowTitulo">
+      <h1>Bienes Intelcost</h1>
+    </div>
+    <div class="colFiltros">
+      <form action="#" method="post" id="formulario">
+        <div class="filtrosContenido">
+          <div class="tituloFiltros">
+            <h5>Filtros</h5>
+          </div>
+          <div class="filtroCiudad input-field">
+            <p><label for="selectCiudad">Ciudad:</label><br></p>
+            <select name="ciudad" id="selectCiudad">
+              <option value="" selected>Elige una ciudad</option>
+              <?php foreach($this->view->citys as $key=> $val): ?>
+                    <option value="<?php echo $val["name"] ?>"><?php echo $val["name"] ?></option>
+                <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="filtroTipo input-field">
+            <p><label for="selecTipo">Tipo:</label></p>
+            <br>
+            <select name="tipo" id="selectTipo">
+              <option value="" selected>Elige un tipo</option>
+              <?php foreach($this->view->tipos as $key=> $val): ?>
+                    <option value="<?php echo $val["name"] ?>" ><?php echo $val["name"] ?></option>
+                <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="filtroPrecio">
+            <label for="rangoPrecio">Precio:</label>
+            <input type="text" id="rangoPrecio" name="precio" value="" />
+          </div>
+          <div class="botonField">
+            <input type="button" class="btn white" value="Buscar" id="submitButton">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div id="tabs" style="width: 75%;">
+      <ul>
+        <li><a href="#tabs-1" id="disponibles">Bienes disponibles</a></li>
+        <li><a href="#tabs-2" id="mis-bienes">Mis bienes</a></li>
+      </ul>
+      <div id="tabs-1">
+        <div class="colContenido" id="divResultadosBusqueda">
+          <div id="data" class="tituloContenido card" style="justify-content: center;">
+            <h5>Resultados de la búsqueda:</h5>
+     
+          </div>
+        </div>
+      </div>
+      
+      <div id="tabs-2" >
+        <div class="colContenido" id="divResultadosBusqueda">
+          <div id="data-save"
+           class="tituloContenido card" style="justify-content: center;">
+            <h5>Bienes guardados:</h5>
+            <div class="divider"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    
+    <script type="text/javascript" src="js/ion.rangeSlider.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/buscador.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript">
+      $( document ).ready(function() {
+          $( "#tabs" ).tabs();
+          $( "#submitButton" ).click(function() {
+            getData()
+          });
+          $( "#mis-bienes" ).click(function() {
+            getBienesGuardados()
+          });
+          $( "#disponibles" ).click(function() {
+            getData()
+          });
+
+          $(document).on("click", ".btn-guardar" , function() {
+            var hijos = $(this).parent().children();
+            const id = $(this).attr('id');
+            const direccion = hijos[1].childNodes[1].textContent;
+            const ciudad = hijos[2].childNodes[1].textContent;
+            const telefono = hijos[3].childNodes[1].textContent;
+            const codigo_postal = hijos[4].childNodes[1].textContent;
+            const tipo = hijos[5].childNodes[1].textContent;
+            const precio = hijos[6].childNodes[1].textContent;
+            console.log(id, direccion, telefono);
+            var data = {
+              id,ciudad, direccion, telefono, codigo_postal, tipo, precio
+            }
+            store(data)
+          });
+          $(document).on("click", ".btn-eliminar" , function() {
+            eliminar($(this).attr('id'))
+          });
+ 
+      });
+    </script>
+  </body>
+  </html>
