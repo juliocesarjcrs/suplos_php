@@ -5,4 +5,5 @@ $route[] =['/bienes', 'BienesController@index'];
 $route[] =['/bienes/store', 'BienesController@store'];
 $route[] =['/bienes/delete/{id}', 'BienesController@destroy'];
 $route[] =['/data', 'HomeController@consume_data'];
+$route[] =['/exportar', 'BienesController@exportar'];
 return $route;
